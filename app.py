@@ -1,6 +1,6 @@
-import yt_dlp as youtube_dl
 import os
 from flask import Flask, render_template, request, send_file
+import yt_dlp as youtube_dl
 
 app = Flask(__name__)
 DOWNLOAD_FOLDER = "downloads/"
@@ -31,19 +31,25 @@ def download_video():
     try:
         url = convert_youtu_be_link(url)
 
+        # Caminho do arquivo de cookies (certifique-se de que o arquivo cookies.txt está no mesmo diretório do script)
+        cookies_file = os.path.join(os.getcwd(), 'cookies.txt')
+
+        # Configuração para o yt-dlp com cookies
         ydl_opts = {
             'format': 'best',
             'outtmpl': os.path.join(DOWNLOAD_FOLDER, '%(title)s.%(ext)s'),
             'noplaylist': True,
-            'username': 'ytdownloader45@gmail.com',
-            'password': 'ytdownloader12',
+            'cookies': cookies_file,  # Usando o arquivo de cookies
         }
 
+        # Download do vídeo
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(url, download=True)
             filename = ydl.prepare_filename(info_dict)
 
+        # Retorna o arquivo para o cliente
         return send_file(filename, as_attachment=True)
+
     except Exception as e:
         return f"Erro ao baixar o vídeo: {str(e)}", 500
 
