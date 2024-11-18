@@ -39,7 +39,7 @@ def download_video():
             'format': 'best',
             'outtmpl': os.path.join(DOWNLOAD_FOLDER, '%(title)s.%(ext)s'),
             'noplaylist': True,
-            'cookies': cookies_file,  # Usando o arquivo de cookies
+            'cookies': 'cookies.txt',  # Especifica diretamente o arquivo cookies.txt
         }
 
         # Download do vídeo
