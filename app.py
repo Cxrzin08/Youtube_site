@@ -29,27 +29,22 @@ def download_video():
         return "Erro: URL não fornecida.", 400
 
     try:
-        # Converte o link se necessário
         url = convert_youtu_be_link(url)
 
-        # Configurações do yt_dlp
         ydl_opts = {
             'format': 'best',
             'outtmpl': os.path.join(DOWNLOAD_FOLDER, '%(title)s.%(ext)s'),
             'noplaylist': True,
         }
 
-        # Realiza o download
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(url, download=True)
             filename = ydl.prepare_filename(info_dict)
 
-        # Envia o arquivo baixado ao usuário
         return send_file(filename, as_attachment=True)
     except Exception as e:
         return f"Erro ao baixar o vídeo: {str(e)}", 500
 
 if __name__ == '__main__':
-    # Define a porta a partir da variável de ambiente ou usa 5000 como padrão
     port = int(os.getenv('PORT', 5000))
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=port)
