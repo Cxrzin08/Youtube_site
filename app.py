@@ -52,4 +52,4 @@ def download_video():
 if __name__ == '__main__':
     # Define a porta a partir da variável de ambiente ou usa 5000 como padrão
     port = int(os.getenv('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(debug=True)
