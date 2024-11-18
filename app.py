@@ -34,12 +34,16 @@ def download_video():
         # Caminho do arquivo de cookies (certifique-se de que o arquivo cookies.txt está no mesmo diretório do script)
         cookies_file = os.path.join(os.getcwd(), 'cookies.txt')
 
+        # Verifique se o arquivo cookies.txt existe
+        if not os.path.exists(cookies_file):
+            return "Erro: arquivo cookies.txt não encontrado.", 400
+
         # Configuração para o yt-dlp com cookies
         ydl_opts = {
             'format': 'best',
             'outtmpl': os.path.join(DOWNLOAD_FOLDER, '%(title)s.%(ext)s'),
             'noplaylist': True,
-            'cookies': 'cookies.txt',  # Especifica diretamente o arquivo cookies.txt
+            'cookies': cookies_file,  # Usando o arquivo de cookies
         }
 
         # Download do vídeo
