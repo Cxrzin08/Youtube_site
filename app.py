@@ -35,7 +35,8 @@ def download_video():
             'format': 'best',
             'outtmpl': os.path.join(DOWNLOAD_FOLDER, '%(title)s.%(ext)s'),
             'noplaylist': True,
-            'cookies': 'youtube_cookies.txt',
+            'username': 'ytdownloader45@gmail.com',
+            'password': 'ytdownloader12',
         }
 
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
